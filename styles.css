@@ -5,13 +5,13 @@
 
 body {
   margin: 0;
-  background: linear-gradient(160deg, #f0f6ff, #f8fbff);
+  background: linear-gradient(160deg, #eff5ff, #f7faff);
   min-height: 100vh;
   color: #172b4d;
 }
 
 .container {
-  max-width: 900px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 2rem 1rem 3rem;
 }
@@ -20,7 +20,12 @@ h1 {
   margin-bottom: 0.2rem;
 }
 
-.subtitle {
+h2 {
+  margin-top: 0;
+}
+
+.subtitle,
+.hint {
   margin-top: 0;
   color: #506180;
 }
@@ -40,6 +45,13 @@ h1 {
   gap: 0.8rem;
 }
 
+.component-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.8rem;
+  align-items: end;
+}
+
 label {
   display: flex;
   flex-direction: column;
@@ -47,7 +59,9 @@ label {
   font-size: 0.95rem;
 }
 
-input {
+input,
+select,
+button {
   border: 1px solid #b5c5de;
   border-radius: 8px;
   padding: 0.55rem 0.7rem;
@@ -55,18 +69,37 @@ input {
 }
 
 button {
-  margin-top: 1rem;
   border: none;
   background: #0d6efd;
   color: white;
-  font-size: 1rem;
-  border-radius: 8px;
-  padding: 0.65rem 1.1rem;
   cursor: pointer;
 }
 
 button:hover {
   background: #0b5ed7;
+}
+
+button.danger {
+  background: #d94841;
+  font-size: 0.8rem;
+  padding: 0.4rem 0.55rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.9rem;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.6rem;
+  border-bottom: 1px dashed #d7e3f3;
 }
 
 .result dl {
@@ -76,6 +109,7 @@ button:hover {
 .result dl > div {
   display: flex;
   justify-content: space-between;
+  gap: 1rem;
   padding: 0.4rem 0;
   border-bottom: 1px dashed #d7e3f3;
 }
@@ -91,10 +125,55 @@ dt {
 dd {
   margin: 0;
   font-weight: 600;
+  text-align: right;
 }
 
 #note {
   margin-bottom: 0;
   color: #6a7485;
   font-size: 0.9rem;
+}
+
+.flowsheet {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.node {
+  min-width: 150px;
+  border-radius: 10px;
+  border: 1px solid #bfd0eb;
+  background: #f7fbff;
+  padding: 0.7rem;
+  box-shadow: inset 0 0 0 1px #eef4fd;
+}
+
+.node strong {
+  font-size: 1.1rem;
+}
+
+.node span {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.8rem;
+  color: #5e6f8f;
+}
+
+.node.source {
+  background: #edf8f0;
+}
+
+.node.sink {
+  background: #f4efff;
+}
+
+.node.pipe {
+  background: #fff6eb;
+}
+
+.arrow {
+  font-size: 1.3rem;
+  color: #3d4f71;
 }
