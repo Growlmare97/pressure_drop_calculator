@@ -60,6 +60,8 @@ function populateSchedules() {
   }
 
   scheduleSelect.innerHTML = '';
+  scheduleSelect.innerHTML = '';
+
   Object.keys(pipe.schedules).forEach((schedule) => {
     const option = document.createElement('option');
     option.value = schedule;
@@ -70,6 +72,22 @@ function populateSchedules() {
   if (pipe.schedules['40']) {
     scheduleSelect.value = '40';
   }
+}
+
+function populateComponentUnits() {
+  const options = unitOptions[componentTypeSelect.value] || ['bar'];
+  componentUnitSelect.innerHTML = '';
+
+  options.forEach((unit) => {
+    const option = document.createElement('option');
+    option.value = unit;
+    option.textContent = unit;
+    componentUnitSelect.append(option);
+  });
+
+  componentUnitSelect.value = options[0];
+  document.getElementById('componentName').value =
+    componentTypeSelect.value === 'pump' ? 'Booster Pump' : 'Boundary Condition';
 }
 
 function getInnerDiameterMm(nps, schedule) {
@@ -90,6 +108,7 @@ function calculateFrictionFactor(reynolds, relativeRoughness) {
 }
 
 function convertToBar(value, unit, density) {
+function toBar(value, unit, density) {
   if (unit === 'bar') {
     return value;
   }
@@ -154,6 +173,12 @@ function getModelInput() {
 }
 
 function calculateHydraulics({ length, diameterMm, flowRateM3h, density, viscosity, roughnessMm, upstreamPressureBar, downstreamTargetBar }) {
+function calculateHydraulics({ length, diameterMm, flowRateM3h, density, viscosity, roughnessMm, upstreamPressureBar }) {
+  // Treat meters as pressure head for liquid service
+  return (density * 9.80665 * value) / 100000;
+}
+
+function calculatePressureDrop({ length, diameterMm, flowRateM3h, density, viscosity, roughnessMm, upstreamPressureBar }) {
   const diameter = diameterMm / 1000;
   const roughness = roughnessMm / 1000;
   const area = Math.PI * diameter * diameter / 4;
@@ -382,6 +407,7 @@ componentForm.addEventListener('submit', (event) => {
     value,
     unit: componentUnitSelect.value
   };
+}
 
   components.splice(stage, 0, component);
   componentForm.reset();
