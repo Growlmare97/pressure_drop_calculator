@@ -1,26 +1,33 @@
-# Pressure Drop Calculator
+# Pressure Drop Flowsheet Studio
 
-A simple browser-based calculator for estimating pressure loss in a straight pipe using the Darcy-Weisbach equation.
+Interactive browser app for single-phase liquid pressure-drop analysis with an editable process flow diagram.
 
-## Inputs
-- Pipe length (m)
-- Inner diameter (mm)
-- Flow rate (m³/h)
-- Fluid density (kg/m³)
-- Dynamic viscosity (Pa·s)
-- Pipe roughness (mm)
+## Latest improvements
+- Added downstream pressure target check (`PASS/FAIL`) so boundary-condition edits can be validated against an operating objective.
+- Added stage reordering controls (`↑` / `↓`) and kept insertion at any stage.
+- Added scenario persistence in `localStorage` and a one-click reset action.
+- Added live form recalculation while inputs are edited.
+- Kept the modernized UI and interactive SVG PFD view.
 
-## Model details
-- Velocity and Reynolds number are derived from the user input.
+## Hydraulic model
+- Pipe pressure loss: Darcy–Weisbach.
 - Friction factor:
-  - Laminar (`Re < 2300`): `f = 64 / Re`
-  - Turbulent (`Re >= 2300`): Swamee-Jain explicit approximation
-- Pressure drop is calculated with Darcy-Weisbach:
+  - Laminar (`Re < 2300`): `f = 64/Re`
+  - Turbulent (`Re >= 2300`): Swamee–Jain approximation.
+- Equipment impacts are converted to bar and applied as signed terms:
+  - `Gain (+)` for pressure addition
+  - `Loss (-)` for pressure loss
 
-`ΔP = f × (L/D) × (ρv²/2)`
+Used equations:
 
-## Run locally
+`ΔP_net = ΔP_friction - Σ(equipment impacts in bar)`
+
+`P_downstream = P_upstream - ΔP_net`
+
+`margin = P_downstream - P_target`
+
+## Run
 ```bash
 python3 -m http.server 8000
 ```
-Open http://localhost:8000 in your browser.
+Open http://localhost:8000.
