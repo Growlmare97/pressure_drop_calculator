@@ -1,25 +1,46 @@
 :root {
   color-scheme: light;
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  --bg: #f2f6ff;
+  --text: #112240;
+  --muted: #5b6d8f;
+  --card: rgba(255, 255, 255, 0.82);
+  --stroke: #dbe5f4;
+  --primary: #3467ff;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
   background: linear-gradient(160deg, #eff5ff, #f7faff);
   min-height: 100vh;
-  color: #172b4d;
+  color: var(--text);
+  background: radial-gradient(circle at 5% 5%, #dbe8ff, #f7f9ff 30%), radial-gradient(circle at 95% 0%, #d9f4ff, #f7f9ff 35%), var(--bg);
 }
 
 .container {
+  max-width: 1200px;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 2rem 1rem 3rem;
+  padding: 1.5rem 1rem 3rem;
 }
 
-h1 {
-  margin-bottom: 0.2rem;
+.card {
+  backdrop-filter: blur(8px);
+  background: var(--card);
+  border: 1px solid var(--stroke);
+  border-radius: 16px;
+  padding: 1.1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 10px 35px rgba(40, 72, 120, 0.09);
 }
 
+.hero {
+  border: 1px solid #ceddfa;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.88), rgba(240, 247, 255, 0.92));
 h2 {
   margin-top: 0;
 }
@@ -30,13 +51,24 @@ h2 {
   color: #506180;
 }
 
-.card {
-  background: #fff;
-  border: 1px solid #d7e3f3;
-  border-radius: 12px;
-  padding: 1rem;
-  box-shadow: 0 8px 24px rgba(20, 56, 100, 0.08);
-  margin-bottom: 1rem;
+.eyebrow {
+  margin: 0;
+  color: #4664ae;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+h1,
+h2 {
+  margin: 0.2rem 0 0.6rem;
+}
+
+.subtitle,
+.hint {
+  margin: 0;
+  color: var(--muted);
 }
 
 .grid {
@@ -47,6 +79,7 @@ h2 {
 
 .component-form {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 0.8rem;
   align-items: end;
@@ -56,27 +89,71 @@ label {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
+  color: #314a73;
 }
 
 input,
 select,
 button {
+  border-radius: 10px;
+  border: 1px solid #c4d3ea;
+  padding: 0.58rem 0.72rem;
   border: 1px solid #b5c5de;
   border-radius: 8px;
   padding: 0.55rem 0.7rem;
   font-size: 0.95rem;
+  background: #fff;
+  color: #102542;
+}
+
+input:focus,
+select:focus {
+  outline: 2px solid rgba(52, 103, 255, 0.22);
+  border-color: #6b8bff;
 }
 
 button {
   border: none;
+  background: linear-gradient(180deg, #4a78ff, #2f5dff);
+  color: #fff;
   background: #0d6efd;
   color: white;
   cursor: pointer;
+  transition: transform 0.12s ease, filter 0.12s ease;
 }
 
 button:hover {
-  background: #0b5ed7;
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+}
+
+button.danger {
+  background: linear-gradient(180deg, #f15f63, #d8484d);
+  padding: 0.42rem 0.56rem;
+  font-size: 0.8rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.8rem;
+  font-size: 0.92rem;
+}
+
+th,
+td {
+  padding: 0.62rem;
+  border-bottom: 1px dashed #d9e3f3;
+  text-align: left;
+}
+
+th {
+  color: #3a537a;
 }
 
 button.danger {
@@ -109,6 +186,9 @@ td {
 .result dl > div {
   display: flex;
   justify-content: space-between;
+  padding: 0.46rem 0;
+  gap: 1rem;
+  border-bottom: 1px dashed #d9e3f3;
   gap: 1rem;
   padding: 0.4rem 0;
   border-bottom: 1px dashed #d7e3f3;
@@ -119,22 +199,66 @@ td {
 }
 
 dt {
-  color: #506180;
+  color: #41577e;
 }
 
 dd {
   margin: 0;
+  text-align: right;
   font-weight: 600;
   text-align: right;
 }
 
 #note {
-  margin-bottom: 0;
-  color: #6a7485;
+  margin: 0.5rem 0 0;
+  color: #5f7295;
   font-size: 0.9rem;
 }
 
 .flowsheet {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.stage-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.stage-insert {
+  background: #eef3ff;
+  color: #3055b4;
+  border: 1px solid #c8d7f6;
+  font-size: 0.82rem;
+  padding: 0.38rem 0.6rem;
+}
+
+.pfd-svg {
+  width: 100%;
+  min-height: 285px;
+  border: 1px solid #d7e2f3;
+  border-radius: 14px;
+}
+
+.svg-title {
+  font-family: inherit;
+  font-size: 13px;
+  fill: #2f4669;
+  text-transform: capitalize;
+}
+
+.svg-value {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  fill: #0f2749;
+}
+
+.svg-caption {
+  font-family: inherit;
+  font-size: 12px;
+  fill: #4e668f;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;

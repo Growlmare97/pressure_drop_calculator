@@ -3,11 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pressure Drop Flowsheet Studio</title>
     <title>Pressure Drop Flowsheet Playground</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="container">
+      <header class="hero card">
+        <p class="eyebrow">Hydraulics workbench</p>
+        <h1>Pressure Drop Flowsheet Studio</h1>
+        <p class="subtitle">Build a process flow diagram, insert equipment at any stage, and explore upstream/downstream pressure behavior in real time.</p>
+      </header>
       <h1>Pressure Drop Flowsheet Playground</h1>
       <p class="subtitle">Model pressure losses and boundary conditions between upstream and downstream process nodes.</p>
 
@@ -15,6 +21,10 @@
         <h2>Pipe & Fluid Definition</h2>
         <form id="calculator-form">
           <div class="grid">
+            <label>
+              Upstream pressure (bar)
+              <input type="number" id="upstreamPressure" min="0" step="any" value="3" required />
+            </label>
             <label>
               Pipe length (m)
               <input type="number" id="length" min="0" step="any" value="25" required />
@@ -44,11 +54,43 @@
               <input type="number" id="roughness" min="0" step="any" value="0.045" required />
             </label>
           </div>
+          <button type="submit">Update hydraulics</button>
           <button type="submit">Update Model</button>
         </form>
       </section>
 
       <section class="card">
+        <h2>Add / Insert Equipment Stage</h2>
+        <p class="hint">You can add equipment at the selected stage below, or click any “+ Insert here” button directly on the process flow diagram.</p>
+        <form id="component-form" class="component-form">
+          <label>
+            Insert at stage
+            <select id="insertStage" required></select>
+          </label>
+          <label>
+            Component type
+            <select id="componentType" required>
+              <option value="pump">Pump</option>
+              <option value="vessel">Vessel / separator</option>
+              <option value="valve">Valve / fitting</option>
+              <option value="pressure">Pressure source/sink</option>
+              <option value="static">Static head</option>
+            </select>
+          </label>
+          <label>
+            Name
+            <input type="text" id="componentName" maxlength="60" value="Booster Pump" required />
+          </label>
+          <label>
+            Effect
+            <select id="componentEffect" required>
+              <option value="gain">Gain (+)</option>
+              <option value="loss">Loss (−)</option>
+            </select>
+          </label>
+          <label>
+            Value
+            <input type="number" id="componentValue" step="any" value="0.5" required />
         <h2>Flowsheet Boundary Conditions</h2>
         <p class="hint">Add equipment and condition effects as pressure/head changes from upstream to downstream.</p>
         <form id="component-form" class="component-form">
@@ -74,6 +116,7 @@
             Unit
             <select id="componentUnit" required></select>
           </label>
+          <button type="submit">Insert equipment</button>
           <button type="submit">Add Condition</button>
         </form>
 
@@ -81,6 +124,10 @@
           <table>
             <thead>
               <tr>
+                <th>Stage</th>
+                <th>Type</th>
+                <th>Name</th>
+                <th>Effect</th>
                 <th>Type</th>
                 <th>Name</th>
                 <th>Impact</th>
@@ -100,6 +147,7 @@
           <div><dt>Reynolds number</dt><dd id="reynolds">-</dd></div>
           <div><dt>Friction factor</dt><dd id="frictionFactor">-</dd></div>
           <div><dt>Pipe friction drop</dt><dd id="pressureDrop">-</dd></div>
+          <div><dt>Flowsheet component impact</dt><dd id="componentImpact">-</dd></div>
           <div><dt>Boundary condition impact</dt><dd id="componentImpact">-</dd></div>
           <div><dt>Net upstream→downstream ΔP</dt><dd id="netDrop">-</dd></div>
           <div><dt>Estimated downstream pressure</dt><dd id="downstreamPressure">-</dd></div>
@@ -108,6 +156,8 @@
       </section>
 
       <section class="card">
+        <h2>Interactive Process Flow Diagram</h2>
+        <div id="flowsheet" class="flowsheet" role="img" aria-label="Interactive upstream to downstream process flow diagram"></div>
         <h2>Process Flow Diagram</h2>
         <div id="flowsheet" class="flowsheet" role="img" aria-label="Upstream to downstream pressure profile"></div>
       </section>
